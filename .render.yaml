@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: line-liff
+    name: Line-liff
     env: python
     plan: free
     buildCommand: ""
