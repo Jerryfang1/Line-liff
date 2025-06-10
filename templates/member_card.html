@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>會員卡 - 金玥銀樓</title>
+    <style>
+        body { font-family: sans-serif; background: #f5f5f5; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        .card h2 { margin-top: 0; color: #bfa76f; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>歡迎，{{ display_name }}！</h2>
+        <p><strong>LINE ID：</strong>{{ user_id }}</p>
+        <p><strong>會員點數：</strong>{{ points }} 點</p>
+    </div>
+</body>
+</html>
