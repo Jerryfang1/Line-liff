@@ -2,26 +2,66 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>會員卡 - 金玥銀樓</title>
+    <title>金玥銀樓會員卡</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    
     <style>
-        body { font-family: sans-serif; background: #f5f5f5; padding: 20px; }
-        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; display: none; }
-        .card h2 { margin-top: 0; color: #bfa76f; }
-        #loading { font-size: 18px; }
+        body {
+            margin: 0;
+            background: linear-gradient(145deg, #000000, #1c1c1c);
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            background-color: #111;
+            border: 1px solid #d4af37;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            width: 90%;
+            max-width: 400px;
+        }
+        h2 {
+            color: #d4af37;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        p {
+            font-size: 16px;
+            margin: 6px 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        button {
+            background-color: #d4af37;
+            color: black;
+            border: none;
+            padding: 10px 16px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
     </style>
+
 </head>
 <body>
-    <div id="loading">🔄 載入中，請稍候...</div>
     <div class="card" id="memberCard">
         <h2>歡迎，<span id="displayName"></span>！</h2>
         <p><strong>LINE ID：</strong><span id="userId"></span></p>
         <p><strong>會員點數：</strong><span id="points">查詢中...</span> 點</p>
+        <br>
+        <button onclick="location.href='/redeem'">點數兌換</button>
+        <button onclick="location.href='/history'" style="margin-left:10px;">查詢紀錄</button>
     </div>
 
     <script>
         async function main() {
-            await liff.init({ liffId: "2007349658-l0124e2k" });  // <-- 請替換為你的 LIFF ID
+            await liff.init({ liffId: "YOUR_LIFF_ID" });
 
             if (!liff.isLoggedIn()) {
                 liff.login();
@@ -32,23 +72,13 @@
             const userId = profile.userId;
             const displayName = profile.displayName;
 
-            await fetch("/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId, displayName })
-            });
-
             const res = await fetch(`/api/member?userId=${userId}`);
             const data = await res.json();
 
             document.getElementById("displayName").innerText = data.display_name;
             document.getElementById("userId").innerText = userId;
             document.getElementById("points").innerText = data.points;
-
-            document.getElementById("loading").style.display = 'none';
-            document.getElementById("memberCard").style.display = 'block';
         }
-
         main();
     </script>
 </body>
